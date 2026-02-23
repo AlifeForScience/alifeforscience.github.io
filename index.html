@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Artificial Life for Science</title>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Courier+Prime&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -12,22 +12,21 @@
       --bg: #f5f0e8;
       --ink: #1a1a18;
       --accent: #2d5a3d;
+      --bordeaux: #8B1538;
       --muted: #7a7060;
       --rule: #c8bfaa;
+    }
+
+    html, body {
+      height: 100%;
     }
 
     body {
       background-color: var(--bg);
       color: var(--ink);
-      font-family: 'Cormorant Garamond', Georgia, serif;
+      font-family: 'Lora', Georgia, serif;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
       position: relative;
-      overflow: hidden;
     }
 
     /* Subtle grid texture */
@@ -41,27 +40,110 @@
       background-size: 60px 60px;
       opacity: 0.25;
       pointer-events: none;
+      z-index: 0;
     }
 
-    .container {
-      max-width: 680px;
-      width: 100%;
-      text-align: center;
+    /* ── 3-column grid: [spacer] [content] [webgl] ── */
+    .page-grid {
+      display: grid;
+      grid-template-columns: 1fr minmax(0, 800px) 1fr;
+      min-height: 100vh;
       position: relative;
-      animation: fadeIn 1.4s ease both;
+      z-index: 1;
     }
 
+    .col-left {
+      position: relative;
+    }
+
+    .nca-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .nca-canvas-wrap {
+      width: 100%;
+      max-width: 320px;
+      position: relative;
+    }
+
+    .nca-canvas-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+      image-rendering: pixelated;
+      border-radius: 4px;
+    }
+
+    .col-center {
+      padding: 2rem 1.5rem;
+    }
+
+    .col-right {
+      position: relative;
+    }
+
+    .webgl-sticky {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .webgl-canvas-wrap {
+      width: 100%;
+      max-width: 320px;
+      height: 70vh;
+      max-height: 500px;
+      position: relative;
+    }
+
+    .webgl-canvas-wrap canvas {
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+
+    .webgl-label {
+      position: absolute;
+      bottom: 4px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.58rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(45, 90, 61, 0.5);
+      pointer-events: none;
+    }
+
+    /* ── Header ── */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(18px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
+    .header {
+      text-align: center;
+      animation: fadeIn 1.4s ease both;
+      margin-bottom: 2rem;
+    }
+
     .label {
-      font-family: 'Courier Prime', monospace;
-      font-size: 0.72rem;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.85rem;
       letter-spacing: 0.22em;
       text-transform: uppercase;
-      color: var(--accent);
+      color: var(--bordeaux);
       margin-bottom: 2rem;
       animation: fadeIn 1.4s 0.2s ease both;
     }
@@ -80,8 +162,8 @@
     }
 
     h1 {
-      font-size: clamp(2.4rem, 6vw, 4rem);
-      font-weight: 300;
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 400;
       line-height: 1.15;
       letter-spacing: 0.01em;
       animation: fadeIn 1.4s 0.35s ease both;
@@ -90,59 +172,465 @@
     h1 em {
       font-style: italic;
       color: var(--accent);
+      white-space: nowrap;
     }
 
-    .under-construction {
-      margin-top: 2.8rem;
+    /* ── Content ── */
+    .content {
+      text-align: left;
       animation: fadeIn 1.4s 0.55s ease both;
     }
 
-    .under-construction p {
-      font-family: 'Courier Prime', monospace;
-      font-size: 0.8rem;
-      letter-spacing: 0.14em;
-      text-transform: uppercase;
-      color: var(--muted);
+    .content p {
+      font-size: 1.15rem;
+      line-height: 1.85;
+      margin-bottom: 1.5rem;
+      color: var(--ink);
+    }
+
+    .content strong {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .content .section {
+      margin-bottom: 2rem;
+    }
+
+    .citation {
+      color: var(--accent);
+      text-decoration: none;
+      font-size: 0.85rem;
+      font-style: italic;
+      font-weight: 600;
+    }
+
+    .citation:hover {
+      text-decoration: underline;
+    }
+
+    .references {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .references h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+      text-align: center;
+    }
+
+    .references .ref-item {
+      margin-bottom: 1.2rem;
+      font-size: 0.9rem;
+      line-height: 1.6;
+      padding-left: 1.5rem;
+      text-indent: -1.5rem;
+    }
+
+    .references .ref-item .ref-number {
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    .references .ref-item a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+
+    .references .ref-item a:hover {
+      text-decoration: underline;
+    }
+
+    /* ── Organisers ── */
+    .organisers {
+      margin-top: 3rem;
+      padding-top: 2rem;
+      border-top: 1px solid var(--rule);
+    }
+
+    .organisers h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      margin-bottom: 1.5rem;
+      color: var(--accent);
+      text-align: center;
+    }
+
+    .organisers-grid {
       display: flex;
-      align-items: center;
       justify-content: center;
-      gap: 0.8rem;
+      gap: 3rem;
+      flex-wrap: wrap;
     }
 
-    .dot {
-      display: inline-block;
-      width: 6px;
-      height: 6px;
+    .organiser-card {
+      text-align: center;
+      max-width: 200px;
+    }
+
+    .organiser-card img {
+      width: 140px;
+      height: 140px;
       border-radius: 50%;
-      background: var(--accent);
-      animation: pulse 2s ease-in-out infinite;
+      object-fit: cover;
+      border: 2px solid var(--rule);
+      margin-bottom: 0.8rem;
     }
 
-    @keyframes pulse {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50%       { opacity: 0.3; transform: scale(0.7); }
+    .organiser-card .name {
+      font-weight: 600;
+      font-size: 1.05rem;
+      color: var(--ink);
+      margin-bottom: 0.25rem;
     }
 
-    .footer {
-      margin-top: 4rem;
-      font-family: 'Courier Prime', monospace;
-      font-size: 0.68rem;
-      letter-spacing: 0.1em;
-      color: var(--rule);
-      animation: fadeIn 1.4s 0.75s ease both;
+    .organiser-card .affiliation {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-style: italic;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 1100px) {
+      .page-grid {
+        grid-template-columns: 1fr minmax(0, 800px) 1fr;
+      }
+      .col-left { display: none; }
+      .col-right { display: none; }
+    }
+
+    @media (max-width: 740px) {
+      .page-grid {
+        grid-template-columns: 1fr;
+      }
+      .col-left { display: none; }
+      .col-center { padding: 1.5rem 1rem; }
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <p class="label">Workshop &mdash; ALIFE 2026</p>
-    <hr class="rule"/>
-    <h1>Artificial Life<br><em>for Science</em></h1>
-    <hr class="rule thin"/>
-    <div class="under-construction">
-      <p><span class="dot"></span> Under construction <span class="dot" style="animation-delay:0.6s"></span></p>
+
+  <div class="page-grid">
+    <!-- Left: NCA growth GIF -->
+    <div class="col-left">
+      <div class="nca-sticky">
+        <div class="nca-canvas-wrap">
+          <img src="nca_growth.gif" alt="Neural Cellular Automata growth animation" />
+        </div>
+      </div>
     </div>
-    <p class="footer">More information coming soon.</p>
+
+    <!-- Center: all text content -->
+    <div class="col-center">
+      <div class="header">
+        <p class="label">Special Session &mdash; ALIFE 2026</p>
+        <hr class="rule"/>
+        <h1>Artificial Life<br><em>for</em><br><em>Science and&nbsp;Engineering</em></h1>
+        <hr class="rule thin"/>
+      </div>
+
+      <div class="content">
+        <p>
+          <strong>Artificial Life</strong> draws inspiration from natural systems — <strong>evolution</strong>, <strong>development</strong>, <strong>ecology</strong>, <strong>collective behaviour</strong> — and explores <strong>life-as-it-could-be</strong> to understand how <strong>complexity</strong> and <strong>intelligence</strong> emerge. Yet as a field, it rarely feeds back into the very natural systems that inspired it. This disconnect represents a missed opportunity: <strong>ALife</strong> has the potential to transform how we model, explore, and collectively organize scientific discovery.
+        </p>
+
+        <p>
+          In particularly we are interested in how works in our community can be used:
+        </p>
+
+        <div class="section">
+          <p>
+            <strong>As a modeling paradigm:</strong> <strong>ALife models capture emergent, non-equilibrium, and self-organising dynamics</strong> that traditional approaches often miss. Combined with modern <strong>machine learning</strong>, they enable data-driven calibration of realistic, interpretable simulations of complex phenomena and can have important implications in fields like <strong>synthetic biology</strong> <span class="citation">[Zarkesh et al., 2022]</span>.
+          </p>
+        </div>
+
+        <div class="section">
+          <p>
+            <strong>As methods for engineering bio-inspired solutions:</strong> <strong>bio-inspired mechanisms can address key engineering challenges</strong> such as <strong>energy</strong> and <strong>sample efficiency</strong>, <strong>robustness</strong> to perturbations, and fast, event-driven responsiveness. This is an active area of research in communities such as <strong>neuromorphic engineering</strong> <span class="citation">[Muir & Sheik, 2025]</span> and <strong>evolvable hardware</strong> <span class="citation">[Whitley et al.]</span> that ALife should more actively engage with.
+          </p>
+        </div>
+
+        <div class="section">
+          <p>
+            <strong>As a tool for assisting human scientific discovery:</strong> <strong>Research in evolutionary search, intrinsic motivation and open-endedness</strong> has the potential of offering tools and theories for assisting human discovery, for example by automating search in open-ended spaces <span class="citation">[Reinke et al., 2020]</span> and helping analyze and coordinate our <strong>innovation networks</strong>. The importance of mechanisms for open-endedness is becoming increasingly important in our era of <strong>Generative AI</strong>, where such ideas are becoming increasingly incorporated in tools for automating scientific discovery <span class="citation">[Cui et al., 2021; Lange et al., 2025]</span>.
+          </p>
+        </div>
+
+        <p>
+          Our Special Session aims at bringing together researchers interested in applying ALife to real-world problems and scientists and industry practitioners curious about how ALife can be helpful in their domains.
+        </p>
+
+        <div class="references">
+          <h2>References</h2>
+          
+          <div class="ref-item">
+            <span class="ref-number">[1]</span> Cui, C., Wang, W., Zhang, M., Chen, G., Luo, Z., & Ooi, B. C. (2021). AlphaEvolve: A Learning Framework to Discover Novel Alphas in Quantitative Investment. In <em>Proceedings of the 2021 International Conference on Management of Data</em> (pp. 2208-2216). <a href="https://doi.org/10.1145/3448016.3457324" target="_blank">https://doi.org/10.1145/3448016.3457324</a>
+          </div>
+
+          <div class="ref-item">
+            <span class="ref-number">[2]</span> Lange, R. T., Imajuku, Y., & Cetin, E. (2025). ShinkaEvolve: Towards Open-Ended And Sample-Efficient Program Evolution. arXiv preprint arXiv:2509.19349. <a href="https://doi.org/10.48550/arXiv.2509.19349" target="_blank">https://doi.org/10.48550/arXiv.2509.19349</a>
+          </div>
+
+          <div class="ref-item">
+            <span class="ref-number">[3]</span> Muir, D. R., & Sheik, S. (2025). The road to commercial success for neuromorphic technologies. <em>Nature Communications</em>, 16(1), 3586. <a href="https://doi.org/10.1038/s41467-025-57352-1" target="_blank">https://doi.org/10.1038/s41467-025-57352-1</a>
+          </div>
+
+          <div class="ref-item">
+            <span class="ref-number">[4]</span> Reinke, C., Etcheverry, M., & Oudeyer, P.-Y. (2020). Intrinsically Motivated Discovery of Diverse Patterns in Self-Organizing Systems. arXiv preprint arXiv:1908.06663. <a href="https://doi.org/10.48550/arXiv.1908.06663" target="_blank">https://doi.org/10.48550/arXiv.1908.06663</a>
+          </div>
+
+          <div class="ref-item">
+            <span class="ref-number">[5]</span> Whitley, D., Yoder, J., & Carpenter, N. Resurrecting FPGA Intrinsic Analog Evolvable Hardware.
+          </div>
+
+          <div class="ref-item">
+            <span class="ref-number">[6]</span> Zarkesh, I., Kazemi Ashtiani, M., Shiri, Z., Aran, S., Braun, T., & Baharvand, H. (2022). Synthetic developmental biology: Engineering approaches to guide multicellular organization. <em>Stem Cell Reports</em>, 17(4), 715-733. <a href="https://doi.org/10.1016/j.stemcr.2022.02.004" target="_blank">https://doi.org/10.1016/j.stemcr.2022.02.004</a>
+          </div>
+        </div>
+
+        <div class="organisers">
+          <h2>Organisers</h2>
+          <div class="organisers-grid">
+            <div class="organiser-card">
+              <img src="images/eleni_nisioti.jpg" alt="Eleni Nisioti" />
+              <div class="name">Eleni Nisioti</div>
+              <div class="affiliation">IT University of Copenhagen</div>
+            </div>
+            <div class="organiser-card">
+              <img src="images/elias_najarro.jpeg" alt="Elias Najarro" />
+              <div class="name">Elias Najarro</div>
+              <div class="affiliation">IT University of Copenhagen</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right: WebGL visualization -->
+    <div class="col-right">
+      <div class="webgl-sticky">
+        <div class="webgl-canvas-wrap">
+          <canvas id="webgl-canvas"></canvas>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <script>
+    // ── Evolvable Circuit Visualization ──
+    const canvas = document.getElementById('webgl-canvas');
+    const dpr = window.devicePixelRatio || 1;
+
+    function initCanvas() {
+      canvas.width = canvas.clientWidth * dpr;
+      canvas.height = canvas.clientHeight * dpr;
+      const c = canvas.getContext('2d');
+      c.scale(dpr, dpr);
+      return c;
+    }
+
+    let ctx = initCanvas();
+    let W = canvas.clientWidth;
+    let H = canvas.clientHeight;
+
+    // Circuit state
+    const nodes = [];
+    const edges = [];
+    const signals = [];
+    let frame = 0;
+
+    function seedNodes(n) {
+      for (let i = 0; i < n; i++) {
+        nodes.push({
+          x: W * 0.15 + Math.random() * W * 0.7,
+          y: H * 0.1 + Math.random() * H * 0.8,
+          r: 2 + Math.random() * 3,
+          age: 0,
+          type: Math.random() < 0.3 ? 'gate' : 'node',
+          pulse: 0
+        });
+      }
+    }
+    seedNodes(5);
+
+    for (let i = 1; i < nodes.length; i++) {
+      edges.push({ a: nodes[i - 1], b: nodes[i], age: 0 });
+    }
+
+    function nearest(node, exclude) {
+      let best = null, bestDist = Infinity;
+      for (const n of nodes) {
+        if (n === node || (exclude && exclude.has(n))) continue;
+        const d = Math.hypot(n.x - node.x, n.y - node.y);
+        if (d < bestDist) { bestDist = d; best = n; }
+      }
+      return { node: best, dist: bestDist };
+    }
+
+    function growNode() {
+      if (nodes.length > 80) return;
+      const parent = nodes[Math.floor(Math.random() * nodes.length)];
+      const angle = (Math.floor(Math.random() * 8) / 8) * Math.PI * 2 + (Math.random() - 0.5) * 0.35;
+      const dist = 25 + Math.random() * 40;
+      const nx = parent.x + Math.cos(angle) * dist;
+      const ny = parent.y + Math.sin(angle) * dist;
+      if (nx < 10 || nx > W - 10 || ny < 10 || ny > H - 10) return;
+
+      for (const n of nodes) {
+        if (Math.hypot(n.x - nx, n.y - ny) < 18) return;
+      }
+
+      const newNode = {
+        x: nx, y: ny,
+        r: 2 + Math.random() * 2.5,
+        age: 0,
+        type: Math.random() < 0.25 ? 'gate' : 'node',
+        pulse: 0
+      };
+      nodes.push(newNode);
+      edges.push({ a: parent, b: newNode, age: 0 });
+
+      const near = nearest(newNode, new Set([parent]));
+      if (near.node && near.dist < 55 && Math.random() < 0.45) {
+        edges.push({ a: newNode, b: near.node, age: 0 });
+      }
+    }
+
+    function spawnSignal() {
+      if (edges.length === 0) return;
+      const edge = edges[Math.floor(Math.random() * edges.length)];
+      const dir = Math.random() < 0.5 ? 1 : -1;
+      signals.push({
+        edge, t: dir === 1 ? 0 : 1, dir,
+        speed: 0.008 + Math.random() * 0.014,
+        alive: true
+      });
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, W, H);
+
+      // Faint PCB grid
+      ctx.strokeStyle = 'rgba(45, 90, 61, 0.1)';
+      ctx.lineWidth = 0.5;
+      for (let x = 0; x < W; x += 20) {
+        ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+      }
+      for (let y = 0; y < H; y += 20) {
+        ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+      }
+
+      // Traces
+      for (const e of edges) {
+        const alpha = Math.min(e.age / 60, 0.7);
+        const mx = e.b.x, my = e.a.y;
+
+        ctx.strokeStyle = `rgba(45, 90, 61, ${alpha * 0.6})`;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(e.a.x, e.a.y);
+        ctx.lineTo(mx, my);
+        ctx.lineTo(e.b.x, e.b.y);
+        ctx.stroke();
+
+        ctx.strokeStyle = `rgba(45, 90, 61, ${alpha * 0.15})`;
+        ctx.lineWidth = 4;
+        ctx.beginPath();
+        ctx.moveTo(e.a.x, e.a.y);
+        ctx.lineTo(mx, my);
+        ctx.lineTo(e.b.x, e.b.y);
+        ctx.stroke();
+
+        e.age++;
+      }
+
+      // Signals
+      for (const s of signals) {
+        if (!s.alive) continue;
+        s.t += s.speed * s.dir;
+        if (s.t > 1 || s.t < 0) {
+          s.alive = false;
+          (s.dir === 1 ? s.edge.b : s.edge.a).pulse = 1;
+          continue;
+        }
+        const e = s.edge;
+        const mx = e.b.x, my = e.a.y;
+        let sx, sy;
+        if (s.t < 0.5) {
+          const lt = s.t / 0.5;
+          sx = e.a.x + (mx - e.a.x) * lt;
+          sy = e.a.y + (my - e.a.y) * lt;
+        } else {
+          const lt = (s.t - 0.5) / 0.5;
+          sx = mx + (e.b.x - mx) * lt;
+          sy = my + (e.b.y - my) * lt;
+        }
+        ctx.beginPath();
+        ctx.arc(sx, sy, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(45, 90, 61, 0.9)';
+        ctx.fill();
+        ctx.beginPath();
+        ctx.arc(sx, sy, 7, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(45, 90, 61, 0.15)';
+        ctx.fill();
+      }
+      for (let i = signals.length - 1; i >= 0; i--) {
+        if (!signals[i].alive) signals.splice(i, 1);
+      }
+
+      // Nodes
+      for (const n of nodes) {
+        const alpha = Math.min(n.age / 40, 1);
+        n.age++;
+        n.pulse *= 0.92;
+
+        if (n.type === 'gate') {
+          const s = n.r * 2.5 + n.pulse * 4;
+          ctx.fillStyle = `rgba(45, 90, 61, ${alpha * 0.15})`;
+          ctx.fillRect(n.x - s, n.y - s, s * 2, s * 2);
+          ctx.strokeStyle = `rgba(45, 90, 61, ${alpha * (0.6 + n.pulse * 0.4)})`;
+          ctx.lineWidth = 1;
+          ctx.strokeRect(n.x - s, n.y - s, s * 2, s * 2);
+          if (n.pulse > 0.05) {
+            ctx.shadowColor = 'rgba(45, 90, 61, 0.4)';
+            ctx.shadowBlur = 10 * n.pulse;
+            ctx.strokeRect(n.x - s, n.y - s, s * 2, s * 2);
+            ctx.shadowBlur = 0;
+          }
+        } else {
+          ctx.beginPath();
+          ctx.arc(n.x, n.y, n.r + n.pulse * 3, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(45, 90, 61, ${alpha * (0.6 + n.pulse * 0.4)})`;
+          ctx.fill();
+          if (n.pulse > 0.05) {
+            ctx.beginPath();
+            ctx.arc(n.x, n.y, n.r + 8, 0, Math.PI * 2);
+            ctx.fillStyle = `rgba(45, 90, 61, ${0.12 * n.pulse})`;
+            ctx.fill();
+          }
+        }
+      }
+
+      if (frame % 30 === 0 && nodes.length < 70) growNode();
+      if (frame % 12 === 0) spawnSignal();
+
+      frame++;
+      requestAnimationFrame(draw);
+    }
+
+    window.addEventListener('resize', () => {
+      ctx = initCanvas();
+      W = canvas.clientWidth;
+      H = canvas.clientHeight;
+    });
+
+    draw();
+  </script>
+
+
 </body>
 </html>
