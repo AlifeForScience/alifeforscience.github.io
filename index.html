@@ -161,6 +161,33 @@
       opacity: 0.5;
     }
 
+    /* ── Navigation Buttons ── */
+    .nav-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+      animation: fadeIn 1.4s 0.5s ease both;
+    }
+
+    .nav-btn {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--accent);
+      text-decoration: none;
+      padding: 0.6rem 1.2rem;
+      border: 1px solid var(--accent);
+      border-radius: 4px;
+      transition: all 0.25s ease;
+    }
+
+    .nav-btn:hover {
+      background-color: var(--accent);
+      color: var(--bg);
+    }
+
     h1 {
       font-size: clamp(2rem, 5vw, 3.4rem);
       font-weight: 400;
@@ -331,11 +358,18 @@
         <hr class="rule"/>
         <h1>Artificial Life<br><em>for</em><br><em>Science and&nbsp;Engineering</em></h1>
         <hr class="rule thin"/>
+        <nav class="nav-buttons">
+          <a href="#description" class="nav-btn">Description</a>
+          <a href="#call-for-papers" class="nav-btn">Call for Papers</a>
+          <a href="#practical-info" class="nav-btn">Practical Info</a>
+        </nav>
       </div>
 
       <div class="content">
+        <section id="description">
+        <h2 style="font-size: 1.5rem; font-weight: 500; margin-bottom: 1.5rem; color: var(--accent); text-align: center;">Description</h2>
         <p>
-          <strong>Artificial Life</strong> draws inspiration from natural systems — <strong>evolution</strong>, <strong>development</strong>, <strong>ecology</strong>, <strong>collective behaviour</strong> — and explores <strong>life-as-it-could-be</strong> to understand how <strong>complexity</strong> and <strong>intelligence</strong> emerge. Yet as a field, it rarely feeds back into the real-world systems that inspired it. This disconnect represents a missed opportunity: <strong>ALife</strong> has the potential to transform how we model, explore, and collectively organize scientific discovery.
+          <strong>Artificial Life</strong> draws inspiration from natural systems — <strong>evolution</strong>, <strong>development</strong>, <strong>ecology</strong>, <strong>collective behaviour</strong> — and explores <strong>life-as-it-could-be</strong> to understand how <strong>complexity</strong> and <strong>intelligence</strong> emerge. Yet as a field, it rarely feeds back into the real-world systems that inspired it. This disconnect represents a missed opportunity: <strong>ALife</strong> has the potential to transform how we model and explore the space of solutions to technical challenges.
         </p>
 
         <p>
@@ -344,25 +378,53 @@
 
         <div class="section">
           <p>
-            <strong>As a modeling paradigm:</strong> <strong>ALife models capture emergent, non-equilibrium, and self-organising dynamics</strong> that traditional approaches often miss. Combined with modern <strong>machine learning</strong>, they enable data-driven calibration of realistic, interpretable simulations of complex phenomena and can have important implications in fields like <strong>synthetic biology</strong> <span class="citation">[Zarkesh et al., 2022]</span>.
+            <strong>As a modeling paradigm:</strong> <strong>ALife models capture emergent, non-equilibrium, and self-organising dynamics</strong> that traditional approaches often miss. Combined with modern <strong>machine learning</strong>, they enable data-driven calibration of realistic, interpretable simulations of complex phenomena and can have important implications in <strong>bioengineering and synthetic biology</strong> <span class="citation">[Gorochowski et al., 2020; Zarkesh et al., 2022]</span>, and <strong>origins of life and astrobiology</strong> <span class="citation">[Rasmussen et al., 2003; Scharf et al., 2015; Solé et al., 2025]</span>.
           </p>
         </div>
 
         <div class="section">
           <p>
-            <strong>As methods for engineering bio-inspired solutions:</strong> <strong>bio-inspired mechanisms can address key engineering challenges</strong> such as <strong>energy</strong> and <strong>sample efficiency</strong>, <strong>robustness</strong> to perturbations, and fast, event-driven responsiveness. This is an active area of research in communities such as <strong>neuromorphic engineering</strong> <span class="citation">[Muir & Sheik, 2025]</span> and <strong>evolvable hardware</strong> <span class="citation">[Whitley et al.]</span> that ALife should more actively engage with.
+            <strong>As methods for engineering bio-inspired solutions:</strong> <strong>bio-inspired mechanisms can address key engineering challenges</strong> such as <strong>energy</strong> and <strong>sample efficiency</strong>, <strong>robustness</strong> to perturbations, and fast, event-driven responsiveness. This is an active area of research in communities such as <strong>neuromorphic engineering</strong> <span class="citation">[Muir & Sheik, 2025]</span> and <strong>evolvable hardware</strong> <span class="citation">[Whitley et al.]</span>, <strong>synthetic biology</strong> <span class="citation">[Stock & Gorochowski, 2024]</span>, <strong>decentralized control and swarm-intelligence</strong> <span class="citation">[Olfati-Saber et al., 2007]</span>, or <strong>unconventional and cellular computing</strong> <span class="citation">[Grozinger et al., 2019]</span> that ALife should more actively engage with.
           </p>
         </div>
 
         <div class="section">
           <p>
-            <strong>As a tool for assisting human scientific discovery:</strong> <strong>Research in evolutionary search, intrinsic motivation and open-endedness</strong> has the potential of offering tools and theories for assisting human discovery, for example by automating search in open-ended spaces <span class="citation">[Reinke et al., 2020]</span> and helping analyze and coordinate our <strong>innovation networks</strong>. The importance of mechanisms for open-endedness is becoming increasingly evident in our era of <strong>Generative AI</strong>, where such ideas are being incorporated into tools for automating scientific discovery <span class="citation">[Cui et al., 2021; Lange et al., 2025]</span>.
+            <strong>As a tool for assisting scientific discovery:</strong> <strong>Research in intrinsic motivation, evolutionary search, and open-endedness</strong> can offer tools and theories for assisting human discovery, for example by automating search in open-ended spaces <span class="citation">[Reinke et al., 2020]</span> and helping improve our collective innovation abilities <span class="citation">[Stanley & Lehman, 2015]</span>. The importance of mechanisms for open-endedness is becoming increasingly evident in our era of <strong>Generative AI</strong>, where such ideas are being incorporated into tools for automating scientific discovery <span class="citation">[Cui et al., 2021; Lange et al., 2025]</span>.
           </p>
         </div>
+        </section>
 
-        <p>
-          Our Special Session aims at bringing together researchers interested in applying ALife to real-world problems and scientists and industry practitioners curious about how ALife can be helpful in their domains.
-        </p>
+        <section id="call-for-papers" class="references">
+          <h2>Call for Papers</h2>
+          <p style="margin-bottom: 1.5rem;">
+            Our session aims at bringing together researchers interested in applying ALife to real-world problems and scientists and industry practitioners curious about how ALife can be helpful in their domains.
+          </p>
+          <p style="margin-bottom: 1rem;"><strong>We welcome different types of contributions, including:</strong></p>
+          <ul style="margin-bottom: 1.5rem; padding-left: 1.5rem; line-height: 1.85;">
+            <li>Reviews and perspectives on existing real-world applications of artificial life, or proposals for new promising areas and long-term visions</li>
+            <li>Novel computational models motivated by questions stemming from specific fields or bridging communities</li>
+            <li>Real-world transfer of existing models and techniques (e.g., in the form of tools, applications, games, or human- and societal studies)</li>
+          </ul>
+          <p style="margin-bottom: 1rem;">The breadth of questions is vast, but here are some we find particularly exciting today, though we particularly invite contributions that go beyond them:</p>
+          <ul style="margin-bottom: 1.5rem; padding-left: 1.5rem; line-height: 1.85;">
+            <li>How can self-organising systems (such as Neural Cellular Automata or Diffusion Models) be used as a data-driven modeling paradigm in biology?</li>
+            <li>How can bio-inspired mechanisms lead to more life-like (robust, energy-efficient, adaptive, smart) human-engineered systems (e.g., in hardware and software)?</li>
+            <li>How can we access and technologically afford the intelligence already baked into living matter (from subcellular to multicellular regulation to networks, organisms, and beyond)?</li>
+            <li>How can we design tools for assisting search in open-ended spaces (such as scientific discovery)?</li>
+            <li>How can we design tools for engineering ecosystems (from natural ones <span class="citation">[Maull et al., 2026]</span> to the emerging landscape of Large Language Models <span class="citation">[Nisioti et al., 2024]</span>)?</li>
+          </ul>
+        </section>
+
+        <section id="practical-info" class="references">
+          <h2>Practical Info</h2>
+          <ul style="padding-left: 1.5rem; line-height: 2; list-style: none;">
+            <li><strong>Submission deadline:</strong> March 30, 2026</li>
+            <li><strong>How to submit:</strong> <a href="https://ssl.linklings.net/conferences/ALIFE/" target="_blank">Conference submission portal</a></li>
+            <li><strong>Venue:</strong> Hybrid conference with physical venue in Waterloo, Canada</li>
+            <li><strong>Conference dates:</strong> August 17–21, 2026</li>
+          </ul>
+        </section>
 
         <div class="references">
           <h2>References</h2>
@@ -372,23 +434,43 @@
           </div>
 
           <div class="ref-item">
-            <span class="ref-number">[2]</span> Lange, R. T., Imajuku, Y., & Cetin, E. (2025). ShinkaEvolve: Towards Open-Ended And Sample-Efficient Program Evolution. arXiv preprint arXiv:2509.19349. <a href="https://doi.org/10.48550/arXiv.2509.19349" target="_blank">https://doi.org/10.48550/arXiv.2509.19349</a>
+            <span class="ref-number">[2]</span> Grozinger, L., et al. (2019). Pathways to cellular supremacy in biocomputing. <em>Nature Communications</em>, 10(1), 5250. <a href="https://doi.org/10.1038/s41467-019-13232-z" target="_blank">https://doi.org/10.1038/s41467-019-13232-z</a>
           </div>
 
           <div class="ref-item">
-            <span class="ref-number">[3]</span> Muir, D. R., & Sheik, S. (2025). The road to commercial success for neuromorphic technologies. <em>Nature Communications</em>, 16(1), 3586. <a href="https://doi.org/10.1038/s41467-025-57352-1" target="_blank">https://doi.org/10.1038/s41467-025-57352-1</a>
+            <span class="ref-number">[3]</span> Lange, R. T., Imajuku, Y., & Cetin, E. (2025). ShinkaEvolve: Towards Open-Ended And Sample-Efficient Program Evolution. arXiv preprint arXiv:2509.19349. <a href="https://doi.org/10.48550/arXiv.2509.19349" target="_blank">https://doi.org/10.48550/arXiv.2509.19349</a>
           </div>
 
           <div class="ref-item">
-            <span class="ref-number">[4]</span> Reinke, C., Etcheverry, M., & Oudeyer, P.-Y. (2020). Intrinsically Motivated Discovery of Diverse Patterns in Self-Organizing Systems. arXiv preprint arXiv:1908.06663. <a href="https://doi.org/10.48550/arXiv.1908.06663" target="_blank">https://doi.org/10.48550/arXiv.1908.06663</a>
+            <span class="ref-number">[4]</span> Maull, V., Shpilkina, Y., de Lorenzo, V., & Solé, R. (2026). Emergent Bioengineering. <em>Preprints</em>. <a href="https://doi.org/10.20944/preprints202603.0448.v1" target="_blank">https://doi.org/10.20944/preprints202603.0448.v1</a>
           </div>
 
           <div class="ref-item">
-            <span class="ref-number">[5]</span> Whitley, D., Yoder, J., & Carpenter, N. Resurrecting FPGA Intrinsic Analog Evolvable Hardware.
+            <span class="ref-number">[5]</span> Muir, D. R., & Sheik, S. (2025). The road to commercial success for neuromorphic technologies. <em>Nature Communications</em>, 16(1), 3586. <a href="https://doi.org/10.1038/s41467-025-57352-1" target="_blank">https://doi.org/10.1038/s41467-025-57352-1</a>
           </div>
 
           <div class="ref-item">
-            <span class="ref-number">[6]</span> Zarkesh, I., Kazemi Ashtiani, M., Shiri, Z., Aran, S., Braun, T., & Baharvand, H. (2022). Synthetic developmental biology: Engineering approaches to guide multicellular organization. <em>Stem Cell Reports</em>, 17(4), 715-733. <a href="https://doi.org/10.1016/j.stemcr.2022.02.004" target="_blank">https://doi.org/10.1016/j.stemcr.2022.02.004</a>
+            <span class="ref-number">[6]</span> Nisioti, E., et al. (2024). From text to life: On the reciprocal relationship between artificial life and large language models. In <em>Artificial Life Conference Proceedings 36</em> (p. 39). MIT Press. <a href="https://direct.mit.edu/isal/proceedings-abstract/isal2024/36/39/123488" target="_blank">https://direct.mit.edu/isal/proceedings-abstract/isal2024/36/39/123488</a>
+          </div>
+
+          <div class="ref-item">
+            <span class="ref-number">[7]</span> Reinke, C., Etcheverry, M., & Oudeyer, P.-Y. (2020). Intrinsically Motivated Discovery of Diverse Patterns in Self-Organizing Systems. arXiv preprint arXiv:1908.06663. <a href="https://doi.org/10.48550/arXiv.1908.06663" target="_blank">https://doi.org/10.48550/arXiv.1908.06663</a>
+          </div>
+
+          <div class="ref-item">
+            <span class="ref-number">[8]</span> Stanley, K. O., & Lehman, J. (2015). <em>Why Greatness Cannot Be Planned: The Myth of the Objective</em>. Springer International Publishing. <a href="https://doi.org/10.1007/978-3-319-15524-1" target="_blank">https://doi.org/10.1007/978-3-319-15524-1</a>
+          </div>
+
+          <div class="ref-item">
+            <span class="ref-number">[9]</span> Whitley, D., Yoder, J., & Carpenter, N. Resurrecting FPGA Intrinsic Analog Evolvable Hardware.
+          </div>
+
+          <div class="ref-item">
+            <span class="ref-number">[10]</span> Zarkesh, I., Kazemi Ashtiani, M., Shiri, Z., Aran, S., Braun, T., & Baharvand, H. (2022). Synthetic developmental biology: Engineering approaches to guide multicellular organization. <em>Stem Cell Reports</em>, 17(4), 715-733. <a href="https://doi.org/10.1016/j.stemcr.2022.02.004" target="_blank">https://doi.org/10.1016/j.stemcr.2022.02.004</a>
+          </div>
+
+          <div class="ref-item">
+            <span class="ref-number">[11]</span> Olfati-Saber, R., Fax, J. A., & Murray, R. M. (2007). Consensus and cooperation in networked multi-agent systems. <em>Proceedings of the IEEE</em>, 95(1), 215-233.
           </div>
         </div>
 
@@ -403,6 +485,21 @@
             <div class="organiser-card">
               <img src="images/elias_najarro.jpeg" alt="Elias Najarro" />
               <div class="name">Elias Najarro</div>
+              <div class="affiliation">IT University of Copenhagen</div>
+            </div>
+            <div class="organiser-card">
+              <img src="images/benedikt_hartl.jpeg" alt="Benedikt Hartl" />
+              <div class="name">Benedikt Hartl</div>
+              <div class="affiliation">Levin Lab, Tufts University</div>
+            </div>
+            <div class="organiser-card">
+              <img src="images/kathrin_korte.jpg" alt="Kathrin Korte" />
+              <div class="name">Kathrin Korte</div>
+              <div class="affiliation">IT University of Copenhagen</div>
+            </div>
+            <div class="organiser-card">
+              <img src="images/milton_montero.jpg" alt="Milton Montero" />
+              <div class="name">Milton Montero</div>
               <div class="affiliation">IT University of Copenhagen</div>
             </div>
           </div>
