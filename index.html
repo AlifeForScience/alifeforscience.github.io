@@ -27,6 +27,7 @@
       font-family: 'Lora', Georgia, serif;
       min-height: 100vh;
       position: relative;
+      overflow-x: hidden;
     }
 
     /* Subtle grid texture */
@@ -46,7 +47,7 @@
     /* ── 3-column grid: [spacer] [content] [webgl] ── */
     .page-grid {
       display: grid;
-      grid-template-columns: 1fr minmax(0, 800px) 1fr;
+      grid-template-columns: 1fr minmax(0, 920px) 1fr;
       min-height: 100vh;
       position: relative;
       z-index: 1;
@@ -62,7 +63,7 @@
       height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-end;
       padding: 2rem 1rem;
     }
 
@@ -94,7 +95,7 @@
       height: 100vh;
       display: flex;
       align-items: center;
-      justify-content: center;
+      justify-content: flex-start;
       padding: 2rem 1rem;
     }
 
@@ -290,13 +291,15 @@
     .organisers-grid {
       display: flex;
       justify-content: center;
-      gap: 3rem;
+      gap: 2.5rem;
       flex-wrap: wrap;
+      max-width: 920px;
+      margin: 0 auto;
     }
 
     .organiser-card {
       text-align: center;
-      width: 200px;
+      width: 260px;
     }
 
     .organiser-card img {
@@ -316,7 +319,7 @@
     }
 
     .organiser-card .affiliation {
-      font-size: 0.88rem;
+      font-size: 0.78rem;
       color: var(--muted);
       font-style: italic;
     }
@@ -333,9 +336,33 @@
     @media (max-width: 740px) {
       .page-grid {
         grid-template-columns: 1fr;
+        max-width: 100vw;
       }
       .col-left { display: none; }
-      .col-center { padding: 1.5rem 1rem; }
+      .col-right { display: none; }
+      .col-center { 
+        padding: 1.5rem 1rem;
+        max-width: 100vw;
+        overflow-x: hidden;
+      }
+      
+      .organisers-grid {
+        max-width: 100%;
+        gap: 1.5rem;
+      }
+      
+      .organiser-card {
+        width: 140px;
+      }
+      
+      .organiser-card img {
+        width: 100px;
+        height: 100px;
+      }
+      
+      .organiser-card .affiliation {
+        font-size: 0.7rem;
+      }
     }
   </style>
 </head>
